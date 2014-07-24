@@ -17,6 +17,8 @@
  * for in depth explanation:
  * http://solidwrench.blogspot.com/2014/07/futexrequeue-part-3-towelroot-source.html
  *
+ *
+ * For educational purposes only.
  */
 
 #define _GNU_SOURCE  
